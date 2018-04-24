@@ -1,0 +1,63 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\begin{document}
+\begin{center}
+\section*{Simulation of Starling murmurations}
+
+Department of Computer Science and Engineering,\\
+Indian Institute of Technology, New Delhi - 110001\\
+Professor: Subhashis Banerjee\\
+Course: Design Practices in Computer Science (COP290)\\
+
+By: Prabhat Kanaujia (2016CS50789); Rahul V(2016CS10370)\\
+\end{center}
+
+\section{Abstract}
+\emph{
+In this report, we present a mathematical model to simulate the phenomenon of Starling Murmuration. This is often referred to as Boids, which was an artificial life program created by Craig Reynolds in 1986 to simulate this beahvior.
+}\\
+\emph{
+There are all sorts of complex rules which decide how the starlings interact with each other and give rise to the phenomenon. In this project, we have considered only a few of those rules, so as to keep the complexity intermediate while, at the same time, keeping the simulation as close to the real phenomenon as possible.
+}
+\\
+\section{Introduction}
+\emph{
+Murmuration refers to the phenomenon that results when hundreds, sometimes thousands, of starlings fly in swooping, intricately coordinated patterns through the sky. Starlings have a remarkable ability to maintain cohesion as a group in highly uncertain environments and with limited, noisy information.
+}
+\\
+\emph{
+Starlings pay attention to a fixed number of their neighbors in the flock, regardless of flock density. When uncertainty in sensing is present, interacting with six or seven neighbors optimizes the balance between group cohesiveness and individual effort. 
+}
+\\
+\emph{
+Here, we try to model this behavior, assuming that this behavior is governed by three rules, namely, Short range repulsion, steering towards the average heading of neighbours and Long range attraction. We computationally simulate the phenomenon by modelling each bird as an independent agent communicating and cooperating with other neighbouring agents. Using this simulation we measure from a realistic simulation the average energy spend by each bird, the angular momentum and the force that each bird has to withstand in a typical flight ritual.
+}
+\section{Simulation}
+In the subsequent article, we'll refer to the bird as an \textbf{agent}. Each agent has certain properties, certain rules that govern the overall behavior of the flock and certain updation rules, according to which the properties of the agents are updated without violating the rules gorverning the overall flock behavior.
+
+\subsection{Properties of an agent}
+The basic properties of an agent are:
+\begin{enumerate}
+\item Mass
+\item Current Coordinates
+\item Speed
+\item Direction of heading
+\item Neighbouring agents
+\end{enumerate}
+There will be certain upper limits on how fast the agent can go, i.e Speed, and also on how fast the agent can turn, i.e. the angular velocity of the boid, to make the simulation more realistic.
+
+\subsection{Rules}
+The basic rules that governs the flocking behavior of starlings are:
+\begin{enumerate}
+\item\textbf{Seperation} - Steer to avoid crowding local flockmates
+\item\textbf{Alignment} - Steer towards the average heading of local flockmates
+\item\textbf{Cohesion} - Steer to move towards the average position of local flockmates
+\end{enumerate}
+Other rules like predator avoidance and obstacle avoidance can also be implemented.
+\subsection{Updating Properies}
+The parameters of an agent are updated based on the rules stated above. These updates are done simultaneously for all agents to ensure the flock-like behavior.\\
+Since, continuous time updation is not possible for the simulation, we update the parameters of the agents at a regular interval of approximately 0.02 seconds, i.e with a frequency of 50 Hertz.
+\end{document}
