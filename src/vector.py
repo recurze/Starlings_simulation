@@ -1,4 +1,5 @@
 from math import sqrt
+
 class vector(object):
     def __init__(self, _x, _y):
         self.x = _x
