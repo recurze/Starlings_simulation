@@ -1,6 +1,7 @@
 from Tkinter import *
 import time
 import frame
+import os
 from constants import WIDTH, HEIGHT, BOID_RADIUS
 f = frame.Frame()
 
@@ -58,8 +59,28 @@ def callback(event):
 canvas.grid(row=3, column=3)
 canvas.bind("<Button-1>", callback)
 
+count = 0
 def go():
+    global count
+    energyx = momentumx = 0.0
+    energyy = momentumy = 0.0
+    count += 1
     f.run()
+    if count == 100:
+        count = 0
+        for i in f.boids:
+            energyx += 0.5*i.velx*i.velx
+            energyy += 0.5*i.vely*i.vely
+            momentumx += i.velx
+            momentumy += i.vely
+        l = len(f.boids)
+        if l:
+            energyx /= l
+            energyy /= l
+            momentumx /= l
+            momentumy /= l
+        print "Average Energy: ", energyx + energyy
+        print "Average momentum: ", momentumx , momentumy
     draw()
     canvas.after(1, go)
 

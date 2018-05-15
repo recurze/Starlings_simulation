@@ -1,6 +1,6 @@
 from math import pi, sqrt
 from random import uniform
-from constants import COHESE_RADIUS
+from constants import COHESE_RADIUS, MAX_SPEED, MIN_SPEED
 import boid
 
 class Frame(object):
@@ -27,22 +27,38 @@ class Frame(object):
                 neighbor.append(ib)
         return neighbor
 
+    def unit(self, x, y):
+        mag = self.dist(0, 0, x, y)
+        if mag == 0:
+            mag = 1
+        return (x/mag, y/mag)
+
     def addBoid(self, x, y):
         self.n += 1
         vx, vy = uniform(-1, 1), uniform(-1, 1)
+        #s = self.dist(0, 0, vx, vy)
+        #if s>MAX_SPEED or s<MIN_SPEED:
+        #    vx, vy = self.unit(vx, vy)
+        #    vx *= MAX_SPEED
+        #    vy *= MAX_SPEED
         self.boids.append(boid.Boid(x, y, vx, vy))
 
     def killem(self):
         self.n -= 1
 
     def run(self):
+        energyx = 0.0
+        energyy = 0.0
+        momentumx = 0.0
+        momentumy = 0.0
+
         vel = []
 
         for i in xrange(self.n):
             ne = self.findNeighbors(i)
             b = self.boids[i]
             b.setNeighbors(ne)
-            a, c, s = b.go()
+            a, c, s, bound= b.go()
 
             vx, vy = b.velx, b.vely
             if self.option_s:
@@ -58,8 +74,13 @@ class Frame(object):
                 vx += x
                 vy += y
 
+            x, y = bound
+            vx += x
+            vy += y
+
             vel.append((vx, vy))
 
         for i in xrange(self.n):
             vx, vy = vel[i]
             self.boids[i].updateInfo(vx, vy)
+
